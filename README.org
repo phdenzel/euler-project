@@ -1,0 +1,10 @@
+#+TITLE: euler-project
+#+AUTHOR: phdenzel
+
+* euler-project
+
+  A few of my solutions to the problems in the archives of [[https://projecteuler.net/][https://projecteuler.net/]].
+  I recommend everybody interested in number puzzles and/or computer programming problems to give it a try!
+  
+*** Note
+    Most of these programs are meant to be executed with a Python >= 3 version.
