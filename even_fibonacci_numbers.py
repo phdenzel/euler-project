@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import timeit
+from time_and_test import tnt
+
 
 def bruteforce_solution(upto):
     """
@@ -56,27 +57,13 @@ def generator_solution(upto):
 
 if __name__ == "__main__":
     N = 1000
-    repeats = 3
+    reps = 3
+    v = o = True
     arg = 4000000
     arg = 100000000000000
-    time = timeit.repeat(
-        'even_fibonacci_numbers.bruteforce_solution({})'.format(arg),
-        setup="import even_fibonacci_numbers", repeat=repeats, number=N)
-    print("bruteforce_solution({0:}):\t{1:}\n".format(
-        arg, bruteforce_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
-    time = timeit.repeat(
-        'even_fibonacci_numbers.better_solution({})'.format(arg),
-        setup="import even_fibonacci_numbers", repeat=repeats, number=N)
-    print("better_solution({0:}):\t{1:}\n".format(
-        arg, better_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
-    time = timeit.repeat(
-        'even_fibonacci_numbers.generator_solution({})'.format(arg),
-        setup="import even_fibonacci_numbers", repeat=repeats, number=N)
-    print("generator_solution({0:}):\t{1:}\n".format(
-        arg, generator_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
+    tnt(bruteforce_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)
+    tnt(better_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)
+    tnt(generator_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import timeit
+from time_and_test import tnt
+
 
 divisors = [3, 5]
 
@@ -61,26 +62,12 @@ def euler_solution(upto):
 
 if __name__ == "__main__":
     N = 1000
-    repeats = 3
+    reps = 3
+    v = o = True
     arg = 1000-1
-    time = timeit.repeat(
-        'multiples_of_3_and_5.obvious_solution({})'.format(arg),
-        setup="import multiples_of_3_and_5", repeat=repeats, number=N)
-    print("obvious_solution({0:}):\t{1:}\n".format(
-        arg, obvious_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
-    time = timeit.repeat(
-        'multiples_of_3_and_5.better_solution({})'.format(arg),
-        setup="import multiples_of_3_and_5", repeat=repeats, number=N)
-    print("better_solution({0:}):\t{1:}\n".format(
-        arg, better_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
-    time = timeit.repeat(
-        'multiples_of_3_and_5.euler_solution({})'.format(arg),
-        setup="import multiples_of_3_and_5", repeat=repeats, number=N)
-    print("euler_solution({0:}):\t{1:}\n".format(
-        arg, euler_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
+    tnt(obvious_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)
+    tnt(better_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)
+    tnt(euler_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)

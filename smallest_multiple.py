@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import timeit
 from math import floor, log
-from primes import primes_upto
+from time_and_test import tnt
+from primes import eratosthenes_npo
 
 divisible_upto = 20
 divisors = list(range(1, divisible_upto+1))
@@ -44,7 +44,7 @@ def optimized_solution(max_divisor):
     a_i is the largest natural number for which p_i**a_i <= k,
     therefore a_i=floor(log(k)/log(p_i)).
     """
-    primes = primes_upto(max_divisor)
+    primes = eratosthenes_npo(max_divisor)
     solution = 1
     for p in primes:
         a = int(floor(log(max_divisor)/log(p)))
@@ -54,19 +54,10 @@ def optimized_solution(max_divisor):
 
 if __name__ == "__main__":
     N = 10
-    repeats = 3
+    reps = 3
+    v = o = True
     arg = 2520
-    time = timeit.repeat(
-        'smallest_multiple.faster_solution({})'.format(arg),
-        setup="import smallest_multiple", repeat=repeats, number=N)
-    print("faster_solution({0:}):\t{1:}\n".format(
-        arg, faster_solution(arg))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
-    time = timeit.repeat(
-        'smallest_multiple.optimized_solution({})'.format(divisible_upto),
-        setup="import smallest_multiple", repeat=repeats, number=N)
-    print("optimized_solution({0:}):\t{1:}\n".format(
-        divisible_upto, optimized_solution(divisible_upto))
-          + "{0:} loops, best of {1:}:, {2:.4f} usec per loop".format(
-              N, repeats, sum(time)/repeats/N*10**6))
+    tnt(faster_solution, args=(arg), repeats=reps, loops=N,
+        output=o, verbose=v)
+    tnt(optimized_solution, args=(divisible_upto), repeats=reps, loops=N,
+        output=o, verbose=v)
